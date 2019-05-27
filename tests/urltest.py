@@ -1,5 +1,6 @@
 #! /usr/bin/env python3
-from httplib2 import Http
+import pycurl
+from io import BytesIO
 import sys
 
 address = input(
@@ -9,12 +10,16 @@ if address == '':
 
 
 def testUrl(path, output):
-    # get output
-    h = Http()
-    url = address + path
-    _, content = h.request(url, 'GET')
-    content = content.decode('utf-8')
-
+    # Updated to use pycurl to address this issue:
+    # https://grokbase.com/t/python/python-list/098b58yc9v/httplib-incredibly-slow
+    buffer = BytesIO()
+    c = pycurl.Curl()
+    c.setopt(c.URL, address+path)
+    c.setopt(c.WRITEDATA, buffer)
+    c.perform()
+    c.close()
+    
+    content = buffer.getvalue().decode('iso-8859-1')
     if content == output:
         return True
     return False
