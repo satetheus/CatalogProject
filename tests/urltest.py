@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 import pycurl
 from io import BytesIO
-import sys
+
 
 address = input(
     "Please enter the address of the server you want to access, \n If left blank the connection will be set to 'http://localhost:8000':   ")
