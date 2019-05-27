@@ -22,4 +22,4 @@ class item(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(32), index=True)
     owner_id = Column(Integer, ForeignKey(user.id), nullable=False)
-    
+    catagory_id = = Column(Integer, ForeignKey(catagory.id), nullable=False)
