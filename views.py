@@ -1,7 +1,5 @@
 #! /usr/bin/env python3
-from blueprints.catagories import catagory
-from blueprints.owners import owner
-from flask import Blueprint, Flask
+from flask import Blueprint, Flask, request
 app = Flask(__name__)
 
 # import database library
@@ -20,8 +18,55 @@ session = DBSession()
 def homepage():
   return "Homepage!"
 
-app.register_blueprint(owner, url_prefix='/catalog/owner')
-app.register_blueprint(catagory, url_prefix='/catalog/catagory')
+
+@app.route('/catalog/owner/<int:owner_id>', methods=['GET'])
+def viewAll_owner(owner_id):
+    owner = session.query(User).filter_by(id=owner_id).first().name
+    if request.method == 'GET':
+        return 'View items by owner {}.'.format(owner)
+
+
+@app.route('/catalog/catagory/<int:catagory_id>', methods=['GET'])
+def viewAll_catagory(catagory_id):
+    catagory = session.query(Catagory).filter_by(id=catagory_id).first().name
+    if request.method == 'GET':
+        return 'View items in catagory {}'.format(catagory)
+
+
+@app.route('/catalog/item/<int:item_id>', methods=['GET'])
+def viewItem(item_id):
+    item = session.query(Item).filter_by(id=item_id).first()
+    catagory = session.query(Catagory).filter_by(id=item.catagory_id).first().name
+    if request.method == 'GET':
+        return 'This is item {} in catagory {}.'.format(item.name, catagory)
+
+
+@app.route('/catalog/item/new', methods=['GET', 'POST'])
+def newItem():
+    if request.method == 'GET':
+        return 'Make a new item.'
+    if request.method == 'POST':
+        return ''
+
+
+@app.route('/catalog/item/<int:item_id>/edit', methods=['GET', 'PATCH'])
+def editItem(item_id):
+    item = session.query(Item).filter_by(id=item_id).first()
+    catagory = session.query(Catagory).filter_by(id=item.catagory_id).first().name
+    if request.method == 'GET':
+        return 'Edit item {} in catagory {}.'.format(item.name, catagory)
+    if request.method == 'PATCH':
+        return ''
+
+
+@app.route('/catalog/item/<int:item_id>/delete', methods=['GET', 'DELETE'])
+def deleteItem(item_id):
+    item = session.query(Item).filter_by(id=item_id).first()
+    catagory = session.query(Catagory).filter_by(id=item.catagory_id).first().name
+    if request.method == 'GET':
+        return 'Delete item {} in catagory {}.'.format(item.name, catagory)
+    if request.method == 'DELETE':
+        return ''
 
 
 if __name__ == '__main__':
