@@ -19,7 +19,7 @@ class Catagory(Base):
     name = Column(String(32), index=True)
 
 
-class item(Base):
+class Item(Base):
     __tablename__ = 'item'
     id = Column(Integer, primary_key=True)
     name = Column(String(32), index=True)
