@@ -4,6 +4,17 @@ from blueprints.owners import owner
 from flask import Blueprint, Flask
 app = Flask(__name__)
 
+# import database library
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from models import User, Base, Catagory, Item
+
+# connect to database
+engine = create_engine('sqlite:///catalog.db')
+Base.metadata.bind = engine
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
+
 @app.route('/')
 @app.route('/catalog/')
 def homepage():
