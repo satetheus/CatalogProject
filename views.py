@@ -1,12 +1,11 @@
 #! /usr/bin/env python3
-from flask import Flask, Blueprint
-from blueprints.owners import owner
 from blueprints.catagories import catagory
-
+from blueprints.owners import owner
+from flask import Blueprint, Flask
 app = Flask(__name__)
 
 @app.route('/')
-@app.route('/catalog')
+@app.route('/catalog/')
 def homepage():
   return "Homepage!"
 

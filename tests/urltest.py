@@ -50,7 +50,7 @@ def twoVar(path, output, testnum=1, loops=5):
 
 
 # Run tests for given urls & expected outputs
-if testUrl('/catalog', "Homepage!"): print("Test 1 success!")
+if testUrl('/catalog/', "Homepage!"): print("Test 1 success!")
 oneVar('/catalog/owner/{}', 'View items by owner {}.', testnum=2)
 twoVar('/catalog/owner/{}/item/{}', 'This is item {} by owner {}.', testnum=3)
 oneVar('/catalog/owner/{}/item/new', 'Make a new item by {}', testnum=4)
