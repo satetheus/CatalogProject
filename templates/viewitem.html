@@ -1,0 +1,12 @@
+{% extends "template.html" %}
+
+{% block title %}View {{item.name}}{% endblock %}
+
+{% block header %}{{item.name}}{% endblock %}
+
+{% block dbdata %}
+    <span class='item-owner'>{{item.owner}}</span><br>
+    <span class='item-catagory'>{{item.catagory}}</span><br>
+    <span class='item-edit'>Edit</span><br>
+    <span class='item-delete'>Delete</span>
+{% endblock %}

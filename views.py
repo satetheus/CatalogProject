@@ -34,11 +34,11 @@ def viewAll_catagory(catagory):
         return render_template('viewcatagory.html', catagory=catagory, items=items)
 
 
-@app.route('/catalog/item/<int:item_id>', methods=['GET'])
-def viewItem(item_id):
-    item = session.query(Item).filter_by(id=item_id).first()
+@app.route('/catalog/item/<string:item_name>', methods=['GET'])
+def viewItem(item_name):
+    item = session.query(Item).filter_by(name=item_name).first()
     if request.method == 'GET':
-        return 'This is item {} in catagory {}.'.format(item.name, catagory)
+        return render_template('viewitem.html', item=item)
 
 
 @app.route('/catalog/item/new', methods=['GET', 'POST'])
@@ -49,20 +49,20 @@ def newItem():
         return ''
 
 
-@app.route('/catalog/item/<int:item_id>/edit', methods=['GET', 'PATCH'])
-def editItem(item_id):
-    item = session.query(Item).filter_by(id=item_id).first()
+@app.route('/catalog/item/<string:item_name>/edit', methods=['GET', 'PATCH'])
+def editItem(item_name):
+    item = session.query(Item).filter_by(name=item_name).first()
     if request.method == 'GET':
-        return 'Edit item {} in catagory {}.'.format(item.name, catagory)
+        return 'Edit item {} in catagory {}.'.format(item)
     if request.method == 'PATCH':
         return ''
 
 
-@app.route('/catalog/item/<int:item_id>/delete', methods=['GET', 'DELETE'])
-def deleteItem(item_id):
-    item = session.query(Item).filter_by(id=item_id).first()
+@app.route('/catalog/item/<string:item_name>/delete', methods=['GET', 'DELETE'])
+def deleteItem(item_name):
+    item = session.query(Item).filter_by(name=item_name).first()
     if request.method == 'GET':
-        return 'Delete item {} in catagory {}.'.format(item.name, catagory)
+        return 'Delete item {} in catagory {}.'.format(item)
     if request.method == 'DELETE':
         return ''
 
