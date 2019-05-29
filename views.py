@@ -20,16 +20,16 @@ def homepage():
   return render_template('homepage.html')
 
 
-@app.route('/catalog/owner/<int:owner_id>', methods=['GET'])
-def viewAll_owner(owner_id):
-    owner = session.query(User).filter_by(id=owner_id).first().name
+@app.route('/catalog/owner/<string:owner>', methods=['GET'])
+def viewAll_owner(owner):
     if request.method == 'GET':
         return 'View items by owner {}.'.format(owner)
 
 
-@app.route('/catalog/catagory/<int:catagory_id>', methods=['GET'])
-def viewAll_catagory(catagory_id):
-    catagory = session.query(Catagory).filter_by(id=catagory_id).first().name
+
+@app.route('/catalog/catagory/<int:catagory>', methods=['GET'])
+def viewAll_catagory(catagory):
+    catagory = session.query(Catagory).filter_by(id=catagory).first().name
     if request.method == 'GET':
         return 'View items in catagory {}'.format(catagory)
 
@@ -37,7 +37,7 @@ def viewAll_catagory(catagory_id):
 @app.route('/catalog/item/<int:item_id>', methods=['GET'])
 def viewItem(item_id):
     item = session.query(Item).filter_by(id=item_id).first()
-    catagory = session.query(Catagory).filter_by(id=item.catagory_id).first().name
+    catagory = session.query(Catagory).filter_by(id=item.catagory).first().name
     if request.method == 'GET':
         return 'This is item {} in catagory {}.'.format(item.name, catagory)
 
@@ -53,7 +53,7 @@ def newItem():
 @app.route('/catalog/item/<int:item_id>/edit', methods=['GET', 'PATCH'])
 def editItem(item_id):
     item = session.query(Item).filter_by(id=item_id).first()
-    catagory = session.query(Catagory).filter_by(id=item.catagory_id).first().name
+    catagory = session.query(Catagory).filter_by(id=item.catagory).first().name
     if request.method == 'GET':
         return 'Edit item {} in catagory {}.'.format(item.name, catagory)
     if request.method == 'PATCH':
@@ -63,7 +63,7 @@ def editItem(item_id):
 @app.route('/catalog/item/<int:item_id>/delete', methods=['GET', 'DELETE'])
 def deleteItem(item_id):
     item = session.query(Item).filter_by(id=item_id).first()
-    catagory = session.query(Catagory).filter_by(id=item.catagory_id).first().name
+    catagory = session.query(Catagory).filter_by(id=item.catagory).first().name
     if request.method == 'GET':
         return 'Delete item {} in catagory {}.'.format(item.name, catagory)
     if request.method == 'DELETE':

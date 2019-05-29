@@ -23,8 +23,8 @@ class Item(Base):
     __tablename__ = 'item'
     id = Column(Integer, primary_key=True)
     name = Column(String(32), index=True)
-    owner_id = Column(Integer, ForeignKey(User.id), nullable=False)
-    catagory_id = Column(Integer, ForeignKey(Catagory.id), nullable=False)
+    owner = Column(String(32), ForeignKey(User.name), nullable=False)
+    catagory = Column(String(32), ForeignKey(Catagory.name), nullable=False)
 
 
 engine = create_engine('sqlite:///catalog.db')
