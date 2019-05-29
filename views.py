@@ -22,9 +22,9 @@ def homepage():
 
 @app.route('/catalog/owner/<string:owner>', methods=['GET'])
 def viewAll_owner(owner):
+    items = session.query(Item).filter_by(owner=owner).all()
     if request.method == 'GET':
-        return 'View items by owner {}.'.format(owner)
-
+        return render_template('viewowner.html', owner=owner, items=items)
 
 
 @app.route('/catalog/catagory/<int:catagory>', methods=['GET'])
