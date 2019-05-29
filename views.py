@@ -37,7 +37,6 @@ def viewAll_catagory(catagory):
 @app.route('/catalog/item/<int:item_id>', methods=['GET'])
 def viewItem(item_id):
     item = session.query(Item).filter_by(id=item_id).first()
-    catagory = session.query(Catagory).filter_by(id=item.catagory).first().name
     if request.method == 'GET':
         return 'This is item {} in catagory {}.'.format(item.name, catagory)
 
@@ -53,7 +52,6 @@ def newItem():
 @app.route('/catalog/item/<int:item_id>/edit', methods=['GET', 'PATCH'])
 def editItem(item_id):
     item = session.query(Item).filter_by(id=item_id).first()
-    catagory = session.query(Catagory).filter_by(id=item.catagory).first().name
     if request.method == 'GET':
         return 'Edit item {} in catagory {}.'.format(item.name, catagory)
     if request.method == 'PATCH':
@@ -63,7 +61,6 @@ def editItem(item_id):
 @app.route('/catalog/item/<int:item_id>/delete', methods=['GET', 'DELETE'])
 def deleteItem(item_id):
     item = session.query(Item).filter_by(id=item_id).first()
-    catagory = session.query(Catagory).filter_by(id=item.catagory).first().name
     if request.method == 'GET':
         return 'Delete item {} in catagory {}.'.format(item.name, catagory)
     if request.method == 'DELETE':
