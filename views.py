@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-from flask import Blueprint, Flask, request
+from flask import Blueprint, Flask, request, render_template
 app = Flask(__name__)
 
 # import database library
@@ -13,10 +13,11 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+
 @app.route('/')
 @app.route('/catalog/')
 def homepage():
-  return "Homepage!"
+  return render_template('homepage.html')
 
 
 @app.route('/catalog/owner/<int:owner_id>', methods=['GET'])
