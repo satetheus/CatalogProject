@@ -1,0 +1,13 @@
+{% extends "template.html" %}
+
+{% block title %}View Catagory{% endblock %}
+
+{% block header %}View items in {{catagory}}{% endblock %}
+
+{% block dbdata %}
+  {% for item in items %}
+    <br><br>
+    <span class='item-name'>{{item.name}}</span><br>
+    <span class='item-owner'>{{item.owner}}</span>
+  {% endfor %}
+{% endblock %}

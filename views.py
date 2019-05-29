@@ -27,11 +27,11 @@ def viewAll_owner(owner):
         return render_template('viewowner.html', owner=owner, items=items)
 
 
-@app.route('/catalog/catagory/<int:catagory>', methods=['GET'])
+@app.route('/catalog/catagory/<string:catagory>', methods=['GET'])
 def viewAll_catagory(catagory):
-    catagory = session.query(Catagory).filter_by(id=catagory).first().name
+    items = session.query(Item).filter_by(catagory=catagory).all()
     if request.method == 'GET':
-        return 'View items in catagory {}'.format(catagory)
+        return render_template('viewcatagory.html', catagory=catagory, items=items)
 
 
 @app.route('/catalog/item/<int:item_id>', methods=['GET'])
