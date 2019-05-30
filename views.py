@@ -53,7 +53,7 @@ def newItem():
 def editItem(item_name):
     item = session.query(Item).filter_by(name=item_name).first()
     if request.method == 'GET':
-        return 'Edit item {} in catagory {}.'.format(item)
+        return 'Edit item {}.'.format(item.name)
     if request.method == 'PATCH':
         return ''
 
@@ -62,7 +62,7 @@ def editItem(item_name):
 def deleteItem(item_name):
     item = session.query(Item).filter_by(name=item_name).first()
     if request.method == 'GET':
-        return 'Delete item {} in catagory {}.'.format(item)
+        return 'Delete item {}.'.format(item.name)
     if request.method == 'DELETE':
         return ''
 
