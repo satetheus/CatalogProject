@@ -27,6 +27,6 @@ class Item(Base):
     catagory = Column(String(32), ForeignKey(Catagory.name), nullable=False)
 
 
-engine = create_engine('sqlite:///catalog.db')
+engine = create_engine('sqlite:///catalog.db?check_same_thread=False')
 
 Base.metadata.create_all(engine)
