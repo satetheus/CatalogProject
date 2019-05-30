@@ -9,7 +9,7 @@
     <br><br>
     <span class='item-name'>{{item.name}}</span><br>
     <span class='item-owner'>{{item.owner}}</span><br>
-    <span class='item-edit'>Edit</span><br>
-    <span class='item-delete'>Delete</span>
+    <a href='/catalog/item/{{item.name}}/edit'>Edit</a><br>
+    <a href='/catalog/item/{{item.name}}/delete/'>Delete</a>
   {% endfor %}
 {% endblock %}

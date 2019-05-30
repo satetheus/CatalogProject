@@ -9,7 +9,11 @@
     <br><br>
     <span class='item-name'>{{item.name}}</span><br>
     <span class='item-catagory'>{{item.catagory}}</span><br>
-    <span class='item-edit'>Edit</span><br>
-    <span class='item-delete'>Delete</span>
+    <a href="{{url_for('editItem', item_name=item.name)}}">
+      Edit
+    </a><br>
+    <a href="{{url_for('deleteItem', item_name=item.name)}}">
+      Delete
+    </a>
   {% endfor %}
 {% endblock %}
