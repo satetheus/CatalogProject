@@ -57,22 +57,28 @@ def newItem():
         return redirect(url_for('viewAll_owner', owner=new_item.owner))
 
 
-@app.route('/catalog/item/<string:item_name>/edit', methods=['GET', 'PATCH'])
+@app.route('/catalog/item/<string:item_name>/edit', methods=['GET', 'POST'])
 def editItem(item_name):
     item = session.query(Item).filter_by(name=item_name).first()
     catagories = session.query(Catagory).all()
     if request.method == 'GET':
         return render_template('edititem.html', item=item, catagories=catagories)
-    if request.method == 'PATCH':
-        return ''
+    if request.method == 'POST':
+        if request.form['name']:
+            item.name = request.form['name']
+        if request.form['catagory']:
+            item.catagory = request.form['catagory']
+        session.add(item)
+        session.commit()
+        return redirect(url_for('viewAll_owner', owner=item.owner))
 
 
-@app.route('/catalog/item/<string:item_name>/delete', methods=['GET', 'DELETE'])
+@app.route('/catalog/item/<string:item_name>/delete', methods=['GET', 'POST'])
 def deleteItem(item_name):
     item = session.query(Item).filter_by(name=item_name).first()
     if request.method == 'GET':
         return render_template('deleteitem.html', item=item)
-    if request.method == 'DELETE':
+    if request.method == 'POST':
         return ''
 
 
