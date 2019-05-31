@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-from flask import Blueprint, Flask, request, render_template, url_for
+from flask import Blueprint, Flask, request, render_template, url_for, redirect, flash
 app = Flask(__name__)
 
 # import database library
@@ -47,7 +47,14 @@ def newItem():
     if request.method == 'GET':
         return render_template('newitem.html', catagories=catagories)
     if request.method == 'POST':
-        return ''
+        new_item = Item(
+            name=request.form['name'], 
+            catagory=request.form['catagory'],
+            owner='Satetheus') # hard coded until authorization is built in.
+        session.add(new_item)
+        session.commit()
+        flash("{} created.".format(new_item.name))
+        return redirect(url_for('viewAll_owner', owner=new_item.owner))
 
 
 @app.route('/catalog/item/<string:item_name>/edit', methods=['GET', 'PATCH'])
@@ -71,4 +78,5 @@ def deleteItem(item_name):
 
 if __name__ == '__main__':
     app.debug = True
+    app.secret_key="african or european?"
     app.run(host='0.0.0.0', port=8000)
