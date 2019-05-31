@@ -70,6 +70,7 @@ def editItem(item_name):
             item.catagory = request.form['catagory']
         session.add(item)
         session.commit()
+        flash("{} successfully edited.".format(item.name))
         return redirect(url_for('viewAll_owner', owner=item.owner))
 
 
