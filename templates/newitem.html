@@ -1,0 +1,16 @@
+{% extends "template.html" %}
+
+{% block title %}New Item{% endblock %}
+{% block header %}Make new item:{% endblock %}
+
+{% block dbdata %}
+    <form action="#" method = "post">
+        <label for="name"><h3>Name</h3></label>
+        <input type ="text" maxlength="40" name="name">
+        
+        <label for="catagory"><h3>catagory</h3></label>
+        {% for catagory in catagories %}
+            <input type="radio" name="catagory">{{catagory.name}}<br>
+        {% endfor %}
+    </form>
+{% endblock %}

@@ -43,8 +43,9 @@ def viewItem(item_name):
 
 @app.route('/catalog/item/new', methods=['GET', 'POST'])
 def newItem():
+    catagories = session.query(Catagory).all()
     if request.method == 'GET':
-        return 'Make a new item.'
+        return render_template('newitem.html', catagories=catagories)
     if request.method == 'POST':
         return ''
 
