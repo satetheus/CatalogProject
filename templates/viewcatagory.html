@@ -9,7 +9,7 @@
     <br><br>
     <span class='item-name'>{{item.name}}</span><br>
     <span class='item-owner'>{{item.owner}}</span><br>
-    <a href="url_for('editItem', item=item)">Edit</a><br>
-    <a href="url_for('deleteItem', item=item)">Delete</a>
+    <a href="{{url_for('editItem', item_name=item.name)}}">Edit</a><br>
+    <a href="{{url_for('deleteItem', item_name=item.name)}}">Delete</a>
   {% endfor %}
 {% endblock %}

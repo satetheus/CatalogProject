@@ -7,6 +7,6 @@
 {% block dbdata %}
     <span class='item-owner'>{{item.owner}}</span><br>
     <span class='item-catagory'>{{item.catagory}}</span><br>
-    <a href="url_for('editItem', item=item)">Edit</a><br>
-    <a href="url_for('deleteItem', item=item)">Delete</a>
+    <a href="{{url_for('editItem', item_name=item.name)}}">Edit</a><br>
+    <a href="{{url_for('deleteItem', item_name=item.name)}}">Delete</a>
 {% endblock %}
