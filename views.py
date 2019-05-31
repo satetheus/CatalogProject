@@ -53,8 +53,9 @@ def newItem():
 @app.route('/catalog/item/<string:item_name>/edit', methods=['GET', 'PATCH'])
 def editItem(item_name):
     item = session.query(Item).filter_by(name=item_name).first()
+    catagories = session.query(Catagory).all()
     if request.method == 'GET':
-        return 'Edit item {}.'.format(item.name)
+        return render_template('edititem.html', item=item, catagories=catagories)
     if request.method == 'PATCH':
         return ''
 

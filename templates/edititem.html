@@ -1,0 +1,23 @@
+{% extends "template.html" %}
+
+{% block title %}Edit Item{% endblock %}
+{% block header %}Edit {{item.name}}:{% endblock %}
+
+{% block dbdata %}
+    <form action="#" method = "post">
+        <label for="name"><h3>Name</h3></label>
+        <input type ="text" maxlength="40" name="name" value="{{item.name}}">
+        
+        <label for="Catagory"><h3>catagory</h3></label>
+        {% for catagory in catagories %}
+            {% if catagory.name == item.catagory %}
+                <input type="radio" name="catagory" checked>{{catagory.name}}<br>
+            {% else %}
+                <input type="radio" name="catagory">{{catagory.name}}<br>
+            {% endif %}
+        {% endfor %}
+        <br>
+
+        <button type="submit" id="submit">Submit</button>
+    </form>
+{% endblock %}
