@@ -8,9 +8,12 @@
         <label for="name"><h3>Name</h3></label>
         <input type ="text" maxlength="40" name="name">
         
-        <label for="catagory"><h3>catagory</h3></label>
+        <label for="Catagory"><h3>catagory</h3></label>
         {% for catagory in catagories %}
             <input type="radio" name="catagory">{{catagory.name}}<br>
         {% endfor %}
+        <br>
+
+        <button type="submit" id="submit">Submit</button>
     </form>
 {% endblock %}
