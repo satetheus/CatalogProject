@@ -4,7 +4,7 @@
 {% block header %}Edit {{item.name}}:{% endblock %}
 
 {% block dbdata %}
-    <form action="#" method = "post">
+    <form action="#" method = "patch">
         <label for="name"><h3>Name</h3></label>
         <input type ="text" maxlength="40" name="name" value="{{item.name}}">
         
