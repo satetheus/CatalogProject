@@ -1,0 +1,14 @@
+{% extends "template.html" %}
+
+{% block title %}Delete Item{% endblock %}
+{% block header %}Are you sure you want to delete {{item.name}}?{% endblock %}
+
+{% block dbdata %}
+    <form action="#" method = "delete">
+        <button type="submit" id="delete_submit">Confirm</button>
+    </form>
+
+    <br>
+
+    <a href="{{url_for('viewAll_catagory', catagory=item.catagory)}}">Cancel</a>
+{% endblock %}

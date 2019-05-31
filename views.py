@@ -64,7 +64,7 @@ def editItem(item_name):
 def deleteItem(item_name):
     item = session.query(Item).filter_by(name=item_name).first()
     if request.method == 'GET':
-        return 'Delete item {}.'.format(item.name)
+        return render_template('deleteitem.html', item=item)
     if request.method == 'DELETE':
         return ''
 
