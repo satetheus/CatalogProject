@@ -80,7 +80,10 @@ def deleteItem(item_name):
     if request.method == 'GET':
         return render_template('deleteitem.html', item=item)
     if request.method == 'POST':
-        return ''
+        session.delete(item)
+        session.commit()
+        flash("{} deleted.".format(item.name))
+        return redirect(url_for('viewAll_catagory', catagory=item.catagory))
 
 
 if __name__ == '__main__':
