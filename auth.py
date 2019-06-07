@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-from flask import Flask, render_template, request, redirect, jsonify, url_for
+from flask import Flask, render_template, request, redirect, url_for
 from flask import make_response, flash, Blueprint
 from flask import session as login_session
 
@@ -32,11 +32,10 @@ CLIENT_ID = "506926343220-t1f403simfav5cbr8i4udls4l3mr0d82.apps.googleuserconten
 
 # Create anti-forgery state token
 @auth.route('/login')
-def showLogin():
+def login():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
                     for x in range(32))
     login_session['state'] = state
-    # return "The current session state is %s" % login_session['state']
     return render_template('login.html', STATE=state)
 
 
@@ -109,8 +108,7 @@ def gconnect():
     data = answer.json()
 
     login_session['username'] = data['name']
-    #login_session['picture'] = data['picture']
-    #login_session['email'] = data['email']
+    login_session['email'] = data['email']
     # ADD PROVIDER TO LOGIN SESSION
     login_session['provider'] = 'google'
 
@@ -120,27 +118,20 @@ def gconnect():
         user_id = createUser(login_session)
     login_session['user_id'] = user_id
 
-    output = '<h1>Welcome, {}!</h1><img src="'.format(
+    response = '<h1>Welcome, {}!</h1><img src="'.format(
         login_session['username'])
-    #output += login_session['picture']
-    #output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
     flash("you are now logged in as %s" % login_session['username'])
     print("done!")
-    return output
+    return response
 
 
 def createUser(login_session):
     newUser = User(name=login_session['username'])#, email=login_session[
-                   #'email'], picture=login_session['picture'])
+                   #'email'])
     session.add(newUser)
     session.commit()
     user = session.query(User).filter_by(name=login_session['username']).first()
     return user.id
-
-
-def getUserInfo(user_id):
-    user = session.query(User).filter_by(id=user_id).one()
-    return user
 
 
 def getUserID(email):
@@ -150,9 +141,8 @@ def getUserID(email):
     except:
         return None
 
+
 # DISCONNECT - Revoke a current user's token and reset their login_session
-
-
 @auth.route('/gdisconnect')
 def gdisconnect():
     # Only disconnect a connected user.
