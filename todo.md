@@ -33,3 +33,6 @@ homepage.html:
 static/app.css:
   add general background style for all pages
   add style for catagories in homepage
+
+static/auth.js
+  move functions from login.html to auth.js
