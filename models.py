@@ -18,6 +18,13 @@ class Catagory(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(32), index=True)
 
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+        }
+
 
 class Item(Base):
     __tablename__ = 'item'
@@ -25,6 +32,15 @@ class Item(Base):
     name = Column(String(32), index=True)
     owner = Column(String(32), ForeignKey(User.name), nullable=False)
     catagory = Column(String(32), ForeignKey(Catagory.name), nullable=False)
+
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'owner': self.owner,
+            'catagory': self.catagory,
+        }
 
 
 engine = create_engine('sqlite:///catalog.db?check_same_thread=False')
