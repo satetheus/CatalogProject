@@ -26,17 +26,27 @@ api = Blueprint('api', __name__, template_folder='templates')
 
 
 #/api/all
-
+@api.route('/all')
+def api_showAll():
+  return 'all items'
 
 
 #/api/owner/<string:owner_name>
-
+@api.route('/owner/<string:owner_name>')
+def api_showOwner(owner_name):
+  return 'all items by {}'.format(owner_name)
 
 
 #/api/catagory/<string:catagory_name>
+@api.route('/owner/<string:catagory_name>')
+def api_showOwner(catagory_name):
+  return 'all items in {}'.format(catagory_name)
 
 
 
 #/api/item/<string:item_name>
+@api.route('/item/<string:item_name>')
+def api_showOwner(item_name):
+  return '{}'.format(item_name)
 
 
