@@ -10,8 +10,8 @@ Base = declarative_base()
 class User(Base):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
-    name = Column(String(32), index=True)
-
+    name = Column(String(32), index=True, nullable=False)
+    email = Column(String(64), nullable=False)
 
 class Catagory(Base):
     __tablename__ = 'catagory'
