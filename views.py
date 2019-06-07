@@ -1,17 +1,18 @@
 #! /usr/bin/env python3
 from flask import Blueprint, Flask, request, render_template, url_for, redirect, flash
 
+# import other project files
 from models import User, Base, Catagory, Item
 from auth import auth
+from apis import api
 
 app = Flask(__name__)
 app.register_blueprint(auth)
-
+app.register_blueprint(api)
 
 # import database library
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
 
 # connect to database
 engine = create_engine('sqlite:///catalog.db?check_same_thread=False')
