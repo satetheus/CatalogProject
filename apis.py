@@ -23,3 +23,20 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 api = Blueprint('api', __name__, template_folder='templates')
+
+
+#/api/all
+
+
+
+#/api/owner/<string:owner_name>
+
+
+
+#/api/catagory/<string:catagory_name>
+
+
+
+#/api/item/<string:item_name>
+
+
