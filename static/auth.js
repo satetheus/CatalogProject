@@ -12,16 +12,14 @@ function signInCallback(authResult) {
         $('#signinButton').attr('style', 'display: none');
         $.ajax({
             type: 'POST',
-            url: '/gconnect?state='+STATE,
+            url: '/gconnect?state=' + STATE,
             headers: {
                 'X-Requested-With': 'XMLHttpRequest'
             },
             contentType: 'application/octet-stream; charset=utf-8',
             success: function (result) {
-                $('#result').html('Login Successful!</br>' + result + '</br>Redirecting...')
-                setTimeout(function () {
-                    window.location.href = "/catalog/";
-                }, 2000);
+                $('#result').html('Login Successful!</br>' + result + '</br>Redirecting...');
+                setTimeout(function () { window.location.href = "/catalog/"; }, 2000);
             },
             processData: false,
             data: authResult['code']
