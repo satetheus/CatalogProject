@@ -38,18 +38,27 @@ def checkLogin(local=False, checkby=None, checkVar=None):
         return False
 
     if local:
-        assert checkby in ['name', 'owner', 'catagory'], "checkby must be 'name', 'owner', or 'catagory'"
-        assert checkvar not None and type(checkvar) == 'str', 'checkvar must be a string'
+        assert (checkby in [
+            'name', 'owner', 'catagory']), "checkby must be 'name', 'owner', or 'catagory'"
+        assert (checkVar != None), 'checkVar must not be None'
+        print(type(checkVar))
+        assert (type(checkVar) == str), 'checkVar must be a string'
 
         search = session.query(Item)
         if checkby == 'name':
             crudItem = search.filter_by(name=checkVar).first()
         elif checkby == 'owner':
-            crudItem = search.filter_by(owner=checkVar).first()
+            crudItem = search.filter_by(owner=checkVar).all()
         elif checkby == 'catagory':
-            crudItem = search.filter_by(catagory=checkVar).first()
- 
-        if crudItem.owner != login_session['username']:
-            return False
-        else:
-            return crudItem
+            crudItem = search.filter_by(catagory=checkVar).all()
+
+        try:
+            if crudItem.owner != login_session['username']:
+                return False
+            else:
+                return crudItem
+        except AttributeError:
+            if crudItem[0].owner != login_session['username']:
+                return False
+            else:
+                return crudItem

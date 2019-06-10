@@ -3,6 +3,7 @@ from flask import Blueprint, Flask, request, render_template, url_for, redirect,
 
 # import other project files
 from models import User, Base, Catagory, Item
+from controls import checkLogin
 from auth import auth
 from apis import api
 
@@ -29,9 +30,11 @@ def homepage():
 
 @app.route('/catalog/owner/<string:owner>', methods=['GET'])
 def viewAll_owner(owner):
-    items = session.query(Item).filter_by(owner=owner).all()
-    if request.method == 'GET':
+    items = checkLogin(True, 'owner', owner)
+    if request.method == 'GET' and items != False:
         return render_template('viewowner.html', owner=owner, items=items)
+    else:
+        return redirect(url_for('homepage'))
 
 
 @app.route('/catalog/catagory/<string:catagory>', methods=['GET'])
