@@ -13,12 +13,12 @@ import httplib2
 import json
 import requests
 
-# import database library
+# import db
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import User, Base, Catagory, Item
 
-# connect to database
+# connect to db
 engine = create_engine('sqlite:///catalog.db?check_same_thread=False')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
@@ -126,8 +126,7 @@ def gconnect():
 
 
 def createUser(login_session):
-    newUser = User(name=login_session['username'])#, email=login_session[
-                   #'email'])
+    newUser = User(name=login_session['username'], email=login_session['email'])
     session.add(newUser)
     session.commit()
     user = session.query(User).filter_by(name=login_session['username']).first()
