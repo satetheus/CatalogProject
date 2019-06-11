@@ -45,11 +45,11 @@ def checkLogin(local=False, checkby=None, checkVar=None):
         assert (type(checkVar) == str), 'checkVar must be a string'
 
         search = session.query(Item)
-        if checkby == 'name':
+        if checkby.lower() == 'name':
             crudItem = search.filter_by(name=checkVar).first()
-        elif checkby == 'owner':
+        elif checkby.lower() == 'owner':
             crudItem = search.filter_by(owner=checkVar).all()
-        elif checkby == 'catagory':
+        elif checkby.lower() == 'catagory':
             crudItem = search.filter_by(catagory=checkVar).all()
 
         try:
