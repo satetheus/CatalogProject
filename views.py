@@ -1,5 +1,6 @@
 #! /usr/bin/env python3
 from flask import Blueprint, Flask, request, render_template, url_for, redirect, flash
+from flask import session as login_session
 
 # import other project files
 from models import User, Base, Catagory, Item
@@ -53,22 +54,24 @@ def viewItem(item_name):
 
 @app.route('/catalog/item/new', methods=['GET', 'POST'])
 def newItem():
-    catagories = session.query(Catagory).all()
-    if request.method == 'GET':
-        return render_template('newitem.html', catagories=catagories)
-    if request.method == 'POST':
-        new_item = Item(
-            name=request.form['name'], 
-            catagory=request.form['catagory'],
-            owner='Satetheus') # hard coded until authorization is built in.
-        session.add(new_item)
-        session.commit()
-        flash("{} created.".format(new_item.name))
-        return redirect(url_for('viewAll_owner', owner=new_item.owner))
+    if checkLogin() != False:
+        catagories = session.query(Catagory).all()
+        if request.method == 'GET':
+            return render_template('newitem.html', catagories=catagories)
+        if request.method == 'POST':
+            new_item = Item(
+                name=request.form['name'], 
+                catagory=request.form['catagory'],
+                owner=login_session['username']) 
+            session.add(new_item)
+            session.commit()
+            flash("{} created.".format(new_item.name))
+            return redirect(url_for('viewAll_owner', owner=new_item.owner))
 
 
 @app.route('/catalog/item/<string:item_name>/edit', methods=['GET', 'POST'])
 def editItem(item_name):
+    checkLogin(True, 'name', item_name)
     item = session.query(Item).filter_by(name=item_name).first()
     catagories = session.query(Catagory).all()
     if request.method == 'GET':
