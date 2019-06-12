@@ -59,7 +59,7 @@ def newItem():
         if request.method == 'GET':
             return render_template('newitem.html', catagories=catagories)
         if request.method == 'POST':
-            crud_create()
+            new_item = crud_create()
             return redirect(url_for('viewAll_owner', owner=new_item.owner))
     else:
         return redirect(url_for('auth.login'))

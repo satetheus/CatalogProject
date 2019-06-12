@@ -56,7 +56,7 @@ def checkLogin(local=False, crudItem=None):
 def sqlItemSearch(checkby, checkVar):
     """
     Runs a search of the Item table, filtered by either 'name', 'owner', 
-    or 'catagory'.
+   or 'catagory'.
     Inputs:
         checkby: String
         checkVar: String
@@ -87,6 +87,7 @@ def crud_create():
     session.add(new_item)
     session.commit()
     flash("{} created.".format(new_item.name))
+    return new_item
 
 
 def crud_edit(item):
