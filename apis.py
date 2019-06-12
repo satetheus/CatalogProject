@@ -26,28 +26,24 @@ session = DBSession()
 api = Blueprint('api', __name__, template_folder='templates')
 
 
-#/api/all
 @api.route('/all')
 def api_showAll():
     items = session.query(Item).all()
     return jsonify(allItems=[i.serialize for i in items])
 
 
-#/api/owner/<string:owner_name>
 @api.route('/owner/<string:owner_name>')
 def api_showOwner(owner_name):
     items = sqlItemSearch('owner', owner_name)
     return jsonify(ownerItems=[i.serialize for i in items])
 
 
-#/api/catagory/<string:catagory_name>
 @api.route('/catagory/<string:catagory_name>')
 def api_showCatagory(catagory_name):
     items = sqlItemSearch('catagory', catagory_name)
     return jsonify(catagoryItems=[i.serialize for i in items])
 
 
-#/api/item/<string:item_name>
 @api.route('/item/<string:item_name>')
 def api_showItem(item_name):
     item = sqlItemSearch('name', item_name)
