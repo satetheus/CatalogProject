@@ -1,3 +1,15 @@
 {% extends "template.html" %}
 {% block title %}Homepage!{% endblock %}
-{% block header %}Homepage!{% endblock %}
+{% block header %}Catalog{% endblock %}
+{% block dbdata %}
+  {% for catagory, items in items.items() %}
+    <h3>{{catagory}}</h3>
+      {% for item in items %}
+        <span>{{item.name}}</span><br>
+        <span>{{item.owner}}</span><br>
+        <a href="{{url_for('editItem', item_name=item.name)}}">Edit</a><br>
+        <a href="{{url_for('deleteItem', item_name=item.name)}}">Delete</a>
+        <br><br>
+      {% endfor %}  
+  {% endfor %}
+{% endblock %}

@@ -4,7 +4,8 @@ from flask import session as login_session
 
 # import other project files
 from models import User, Base, Catagory, Item
-from controls import checkLogin, sqlItemSearch, crud_create, crud_edit, crud_delete
+from controls import checkLogin, sqlItemSearch, showAllItems
+from controls import crud_create, crud_edit, crud_delete 
 from auth import auth
 from apis import api
 
@@ -26,7 +27,8 @@ session = DBSession()
 @app.route('/')
 @app.route('/catalog/')
 def homepage():
-    return render_template('homepage.html')
+    items = showAllItems(True)
+    return render_template('homepage.html', items=items)
 
 
 @app.route('/catalog/owner/<string:owner>', methods=['GET'])
