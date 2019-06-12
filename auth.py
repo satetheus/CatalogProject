@@ -114,7 +114,7 @@ def gconnect():
     login_session['provider'] = 'google'
 
     # see if user exists, if it doesn't make a new one
-    user_id = session.query(User).filter_by(email = data["email"]).first()
+    user_id = session.query(User).filter_by(email = data["email"]).first().id
     if not user_id:
         user_id = createUser(login_session)
     login_session['user_id'] = user_id
@@ -130,7 +130,6 @@ def gconnect():
 # DISCONNECT - Revoke a current user's token and reset their login_session
 @auth.route('/gdisconnect')
 def gdisconnect():
-    print(login_session['access_token'])
     # Only disconnect a connected user.
     access_token = login_session.get('access_token')
     if access_token is None:
