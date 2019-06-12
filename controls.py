@@ -103,3 +103,11 @@ def crud_delete(item):
     session.delete(item)
     session.commit()
     flash("{} deleted.".format(item.name))
+
+
+def createUser(login_session):
+    newUser = User(name=login_session['username'], email=login_session['email'])
+    session.add(newUser)
+    session.commit()
+    user = session.query(User).filter_by(name=login_session['username']).first()
+    return user.id
