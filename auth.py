@@ -12,6 +12,7 @@ import random
 import httplib2
 import json
 import requests
+from controls import createUser
 
 # import db
 from sqlalchemy import create_engine
@@ -113,7 +114,7 @@ def gconnect():
     login_session['provider'] = 'google'
 
     # see if user exists, if it doesn't make a new one
-    user_id = getUserID(data["email"])
+    user_id = session.query(User).filter_by(email = data["email"]).first()
     if not user_id:
         user_id = createUser(login_session)
     login_session['user_id'] = user_id
@@ -125,25 +126,11 @@ def gconnect():
     return response
 
 
-def createUser(login_session):
-    newUser = User(name=login_session['username'], email=login_session['email'])
-    session.add(newUser)
-    session.commit()
-    user = session.query(User).filter_by(name=login_session['username']).first()
-    return user.id
-
-
-def getUserID(email):
-    try:
-        user = session.query(User).filter_by(email=email).one()
-        return user.id
-    except:
-        return None
-
 
 # DISCONNECT - Revoke a current user's token and reset their login_session
 @auth.route('/gdisconnect')
 def gdisconnect():
+    print(login_session['access_token'])
     # Only disconnect a connected user.
     access_token = login_session.get('access_token')
     if access_token is None:
