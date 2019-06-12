@@ -10,6 +10,7 @@ from oauth2client.client import FlowExchangeError
 import httplib2
 import json
 import requests
+from controls import sqlItemSearch
 
 # import database library
 from sqlalchemy import create_engine
@@ -35,19 +36,19 @@ def api_showAll():
 #/api/owner/<string:owner_name>
 @api.route('/owner/<string:owner_name>')
 def api_showOwner(owner_name):
-    items = session.query(Item).filter_by(owner=owner_name).all()
+    items = sqlItemSearch('owner', owner_name)
     return jsonify(ownerItems=[i.serialize for i in items])
 
 
 #/api/catagory/<string:catagory_name>
 @api.route('/catagory/<string:catagory_name>')
 def api_showCatagory(catagory_name):
-    items = session.query(Item).filter_by(catagory=catagory_name).all()
+    items = sqlItemSearch('catagory', catagory_name)
     return jsonify(catagoryItems=[i.serialize for i in items])
 
 
 #/api/item/<string:item_name>
 @api.route('/item/<string:item_name>')
 def api_showItem(item_name):
-    item = session.query(Item).filter_by(name=item_name).first()
+    item = sqlItemSearch('name', item_name)
     return jsonify(item.serialize)
