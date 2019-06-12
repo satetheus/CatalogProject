@@ -4,7 +4,7 @@ from flask import session as login_session
 
 # import other project files
 from models import User, Base, Catagory, Item
-from controls import checkLogin
+from controls import checkLogin, sqlItemSearch, crud_create, crud_edit, crud_delete
 from auth import auth
 from apis import api
 
@@ -26,13 +26,13 @@ session = DBSession()
 @app.route('/')
 @app.route('/catalog/')
 def homepage():
-  return render_template('homepage.html')
+    return render_template('homepage.html')
 
 
 @app.route('/catalog/owner/<string:owner>', methods=['GET'])
 def viewAll_owner(owner):
-    items = checkLogin(True, 'owner', owner)
-    if request.method == 'GET' and items != False:
+    items = sqlItemSearch('owner', owner)
+    if request.method == 'GET' and checkLogin():
         return render_template('viewowner.html', owner=owner, items=items)
     else:
         return redirect(url_for('homepage'))
@@ -40,66 +40,59 @@ def viewAll_owner(owner):
 
 @app.route('/catalog/catagory/<string:catagory>', methods=['GET'])
 def viewAll_catagory(catagory):
-    items = session.query(Item).filter_by(catagory=catagory).all()
+    items = sqlItemSearch('catagory', catagory)
     if request.method == 'GET':
         return render_template('viewcatagory.html', catagory=catagory, items=items)
 
 
 @app.route('/catalog/item/<string:item_name>', methods=['GET'])
 def viewItem(item_name):
-    item = session.query(Item).filter_by(name=item_name).first()
+    item = sqlItemSearch('name', item_name)
     if request.method == 'GET':
         return render_template('viewitem.html', item=item)
 
 
 @app.route('/catalog/item/new', methods=['GET', 'POST'])
 def newItem():
-    if checkLogin() != False:
+    if checkLogin():
         catagories = session.query(Catagory).all()
         if request.method == 'GET':
             return render_template('newitem.html', catagories=catagories)
         if request.method == 'POST':
-            new_item = Item(
-                name=request.form['name'], 
-                catagory=request.form['catagory'],
-                owner=login_session['username']) 
-            session.add(new_item)
-            session.commit()
-            flash("{} created.".format(new_item.name))
+            crud_create()
             return redirect(url_for('viewAll_owner', owner=new_item.owner))
+    else:
+        return redirect(url_for('login'))
 
 
 @app.route('/catalog/item/<string:item_name>/edit', methods=['GET', 'POST'])
 def editItem(item_name):
-    checkLogin(True, 'name', item_name)
-    item = session.query(Item).filter_by(name=item_name).first()
-    catagories = session.query(Catagory).all()
-    if request.method == 'GET':
-        return render_template('edititem.html', item=item, catagories=catagories)
-    if request.method == 'POST':
-        if request.form['name']:
-            item.name = request.form['name']
-        if request.form['catagory']:
-            item.catagory = request.form['catagory']
-        session.add(item)
-        session.commit()
-        flash("{} successfully edited.".format(item.name))
+    item = sqlItemSearch('name', item_name)
+    if checkLogin(True, item):
+        catagories = session.query(Catagory).all()
+        if request.method == 'GET':
+            return render_template('edititem.html', item=item, catagories=catagories)
+        if request.method == 'POST':
+            crud_edit(item)
+            return redirect(url_for('viewAll_owner', owner=item.owner))
+    else:
         return redirect(url_for('viewAll_owner', owner=item.owner))
 
 
 @app.route('/catalog/item/<string:item_name>/delete', methods=['GET', 'POST'])
 def deleteItem(item_name):
-    item = session.query(Item).filter_by(name=item_name).first()
-    if request.method == 'GET':
-        return render_template('deleteitem.html', item=item)
-    if request.method == 'POST':
-        session.delete(item)
-        session.commit()
-        flash("{} deleted.".format(item.name))
+    item = sqlItemSearch('name', item_name)
+    if checkLogin(True, item):
+        if request.method == 'GET':
+            return render_template('deleteitem.html', item=item)
+        if request.method == 'POST':
+            crud_delete(item)
+            return redirect(url_for('viewAll_catagory', catagory=item.catagory))
+    else:
         return redirect(url_for('viewAll_catagory', catagory=item.catagory))
 
 
 if __name__ == '__main__':
     app.debug = True
-    app.secret_key="african or european?"
+    app.secret_key = "african or european?"
     app.run(host='0.0.0.0', port=8000)
