@@ -1,34 +1,15 @@
 #! /usr/bin/env python3
-from flask import Flask, render_template, request, redirect, jsonify, url_for
-from flask import make_response, flash, Blueprint
-from flask import session as login_session
+from flask import Flask, render_template, request, jsonify, Blueprint
 
-#import oauth
-from oauth2client.client import flow_from_clientsecrets
-from oauth2client.client import FlowExchangeError
-
-import httplib2
 import json
-import requests
-from controls import sqlItemSearch
-
-# import database library
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from models import User, Base, Catagory, Item
-
-# connect to database
-engine = create_engine('sqlite:///catalog.db?check_same_thread=False')
-Base.metadata.bind = engine
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
+from controls import sqlItemSearch, showAllItems
 
 api = Blueprint('api', __name__, template_folder='templates')
 
 
 @api.route('/all')
 def api_showAll():
-    items = session.query(Item).all()
+    items = showAllItems()
     return jsonify(allItems=[i.serialize for i in items])
 
 
