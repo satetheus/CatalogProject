@@ -79,6 +79,11 @@ def sqlItemSearch(checkby, checkVar):
     return crudItem
 
 
+def showAllItems():
+    return session.query(Item).order_by(Item.catagory.desc())
+
+
+
 def crud_create():
     new_item = Item(
         name=request.form['name'],
