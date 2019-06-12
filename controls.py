@@ -7,12 +7,6 @@ from flask import session as login_session
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
 
-import string
-import random
-import httplib2
-import json
-import requests
-
 # import db
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -79,8 +73,17 @@ def sqlItemSearch(checkby, checkVar):
     return crudItem
 
 
-def showAllItems():
-    return session.query(Item).order_by(Item.catagory.desc())
+def showAllItems(separate=False):
+    items = session.query(Item).order_by(Item.catagory.desc())
+    if separate:
+        separate_items = {}
+        catagories = session.query(Catagory).all()
+        for catagory in catagories:
+            separate_items[catagory.name] = []
+        for item in items:
+            separate_items[item.catagory].append(item)
+        items = separate_items
+    return items
 
 
 
