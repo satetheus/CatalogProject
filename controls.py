@@ -77,3 +77,29 @@ def sqlItemSearch(checkby, checkVar):
         crudItem = search.filter_by(catagory=checkVar).all()
 
     return crudItem
+
+
+def crud_create():
+    new_item = Item(
+        name=request.form['name'],
+        catagory=request.form['catagory'],
+        owner=login_session['username'])
+    session.add(new_item)
+    session.commit()
+    flash("{} created.".format(new_item.name))
+
+
+def crud_edit(item):
+    if request.form['name']:
+        item.name = request.form['name']
+    if request.form['catagory']:
+        item.catagory = request.form['catagory']
+    session.add(item)
+    session.commit()
+    flash("{} successfully edited.".format(item.name))
+
+
+def crud_delete(item):
+    session.delete(item)
+    session.commit()
+    flash("{} deleted.".format(item.name))
