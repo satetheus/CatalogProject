@@ -62,7 +62,7 @@ def newItem():
             crud_create()
             return redirect(url_for('viewAll_owner', owner=new_item.owner))
     else:
-        return redirect(url_for('login'))
+        return redirect(url_for('auth.login'))
 
 
 @app.route('/catalog/item/<string:item_name>/edit', methods=['GET', 'POST'])
