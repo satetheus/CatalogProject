@@ -13,9 +13,6 @@ pyasn1==0.4.5
 pyasn1-modules==0.2.5
 pycurl==7.43.0
 pyparsing==2.4.0
-python-apt==1.1.0b1+ubuntu0.16.4.4
-python-debian==0.1.27
-python-systemd==231
 requests==2.20.0
 rsa==4.0
 six==1.10.0
