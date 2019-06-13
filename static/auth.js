@@ -1,4 +1,5 @@
-
+// A large amount of this code came from:
+// https://gist.github.com/shyamgupta/d8ba035403e8165510585b805cf64ee6 
 function start() {
     gapi.load('auth2', function () {
         auth2 = gapi.auth2.init({

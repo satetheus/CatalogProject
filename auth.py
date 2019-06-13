@@ -1,4 +1,7 @@
 #! /usr/bin/env python3
+
+# Large amount of the code came from:
+# https://github.com/udacity/ud330/blob/master/Lesson4/step2/project.py
 from flask import Flask, render_template, request, redirect, url_for
 from flask import make_response, flash, Blueprint
 from flask import session as login_session
