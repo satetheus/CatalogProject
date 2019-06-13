@@ -10,8 +10,8 @@ session = DBSession()
 
 
 # make test users
-users = {"Satetheus":'Satetheus@satetheus.com', "Vorian":'vorian@vorian.com', "Vanar":'vanar@vanar.com', "Primo":'primo@primo.com', "Lovely":'lovely@lovely.com'}
-for username, email in users.items():
+users = [["Satetheus",'Satetheus@satetheus.com'], ["Vorian",'vorian@vorian.com'], ["Vanar",'vanar@vanar.com'], ["Primo",'primo@primo.com'], ["Lovely",'lovely@lovely.com']]
+for username, email in users:
     person = User(name=username, email=email)
     session.add(person)
 session.commit()
@@ -30,7 +30,8 @@ items = ['kdtl', 'gibm', 'jbmp', 'dopu', 'memb', 'fwcj', 'mhsd', 'yhge',
          'gbpb']
 
 for i in range(len(items)):
-    owner = session.query(User).filter_by(name=users[int(i/5)%5]).first().name
+    currentName,_ = users[int(i/5)%5]
+    owner = session.query(User).filter_by(name=currentName).first().name
     catagory = session.query(Catagory).filter_by(name=catagories[i%5]).first().name
     game = Item(name=items[i], owner=owner, catagory=catagory)
     session.add(game)
