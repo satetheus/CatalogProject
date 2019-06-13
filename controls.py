@@ -26,8 +26,11 @@ def checkLogin(local=False, crudItem=None):
     current user is the creator of the item 'crudItem'.
 
     Inputs:
-      local: Boolean
-      crudItem: SQLAlchemy query
+        local: Boolean
+        crudItem: SQLAlchemy query
+    Outputs:
+        Boolean
+      
     """
     if 'username' not in login_session:
         return False
@@ -74,6 +77,15 @@ def sqlItemSearch(checkby, checkVar):
 
 
 def showAllItems(separate=False):
+    """
+    Returns the entire Item table. If separate is set to True, the 
+    items are returned as a dictionary separated by catagory.
+    Inputs:
+        separate (optional): Boolean, defualts to False
+    Outputs:
+        items: List if separate is False,
+               Dict if separate is True
+    """
     items = session.query(Item).order_by(Item.catagory.desc())
     if separate:
         separate_items = {}
@@ -88,6 +100,14 @@ def showAllItems(separate=False):
 
 
 def crud_create():
+    """
+    Creates a new item in the Item table based on the form data & 
+    the current session.
+    Inputs:
+        None
+    Outputs:
+        None
+    """
     new_item = Item(
         name=request.form['name'],
         catagory=request.form['catagory'],
@@ -99,6 +119,13 @@ def crud_create():
 
 
 def crud_edit(item):
+    """
+    Edits the input item based on the form data.
+    Inputs:
+        item: a sqlalchemy queried item
+    Outputs:
+        None
+    """
     if request.form['name']:
         item.name = request.form['name']
     if request.form['catagory']:
@@ -109,12 +136,26 @@ def crud_edit(item):
 
 
 def crud_delete(item):
+    """
+    Deletes the input item from the table.
+    Inputs:
+        item: a sqlalchemy queried item
+    Outputs:
+        None
+    """
     session.delete(item)
     session.commit()
     flash("{} deleted.".format(item.name))
 
 
 def createUser(login_session):
+    """
+    Creates a new user based on the current login session.
+    Inputs:
+        login_session: dict
+    Outputs:
+        user.id: int
+    """
     newUser = User(name=login_session['username'], email=login_session['email'])
     session.add(newUser)
     session.commit()
