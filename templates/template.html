@@ -7,11 +7,14 @@
     {% endblock %}
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block title %}Hello?{% endblock %}</title>
-    {% block css %}{% endblock %}
+    {% block css %}
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app.css') }}">
+    {% endblock %}
     {% block js %}{% endblock %}
 </head>
 
 <body>
+    {% block extras %}{% endblock %}
     <h2>{% block header %}{% endblock %}</h2>
     {% block dbdata %}{% endblock %}
 </body>

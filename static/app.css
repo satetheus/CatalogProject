@@ -1,0 +1,26 @@
+html {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    background-color: #7CA2AB;
+    background-image: url('images/water1.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 50%;
+    background-position: left bottom;
+}
+
+.login {
+    background-color: gray;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.login > a {
+    text-decoration: none;
+}
+
+.data {
+    float: left;
+    width: 20%;
+}
