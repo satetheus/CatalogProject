@@ -28,7 +28,8 @@ session = DBSession()
 @app.route('/catalog/')
 def homepage():
     items = showAllItems(True)
-    return render_template('homepage.html', items=items)
+    log = checkLogin()
+    return render_template('homepage.html', items=items, log=log)
 
 
 @app.route('/catalog/owner/<string:owner>', methods=['GET'])
