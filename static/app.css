@@ -20,7 +20,16 @@ html {
     text-decoration: none;
 }
 
+h2 {
+    text-align: center;
+}
+
 .data {
+    margin: 2%;
+    background-color: grey;
     float: left;
-    width: 20%;
+    width: 16%;
+    border-radius: 2%;
+    -webkit-box-shadow: 1px 2px 3px lightgrey;
+    text-align: center;
 }
