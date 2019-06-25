@@ -10,7 +10,11 @@ session = DBSession()
 
 
 # make test users
-users = [["Satetheus",'Satetheus@satetheus.com'], ["Vorian",'vorian@vorian.com'], ["Vanar",'vanar@vanar.com'], ["Primo",'primo@primo.com'], ["Lovely",'lovely@lovely.com']]
+users = [["Satetheus", 'Satetheus@satetheus.com'],
+         ["Vorian", 'vorian@vorian.com'],
+         ["Vanar", 'vanar@vanar.com'],
+         ["Primo", 'primo@primo.com'],
+         ["Lovely", 'lovely@lovely.com']]
 for username, email in users:
     person = User(name=username, email=email)
     session.add(person)
@@ -24,15 +28,16 @@ for types in catagories:
 session.commit()
 
 # make test items
-items = ['kdtl', 'gibm', 'jbmp', 'dopu', 'memb', 'fwcj', 'mhsd', 'yhge', 
-         'mzze', 'uicj', 'nvwg', 'jypy', 'pdlp', 'oseg', 'gvku', 'alfk', 
-         'npwe', 'ihtr', 'wwjr', 'ohas', 'wwkw', 'nnsq', 'hezz', 'tird', 
+items = ['kdtl', 'gibm', 'jbmp', 'dopu', 'memb', 'fwcj', 'mhsd', 'yhge',
+         'mzze', 'uicj', 'nvwg', 'jypy', 'pdlp', 'oseg', 'gvku', 'alfk',
+         'npwe', 'ihtr', 'wwjr', 'ohas', 'wwkw', 'nnsq', 'hezz', 'tird',
          'gbpb']
 
 for i in range(len(items)):
-    currentName,_ = users[int(i/5)%5]
+    currentName, _ = users[int(i/5) % 5]
     owner = session.query(User).filter_by(name=currentName).first().name
-    catagory = session.query(Catagory).filter_by(name=catagories[i%5]).first().name
+    catagory = session.query(Catagory).filter_by(
+        name=catagories[i % 5]).first().name
     game = Item(name=items[i], owner=owner, catagory=catagory)
     session.add(game)
 session.commit()
