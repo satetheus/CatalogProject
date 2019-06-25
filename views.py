@@ -1,21 +1,21 @@
 #! /usr/bin/env python3
-from flask import Blueprint, Flask, request, render_template, url_for, redirect, flash
-from flask import session as login_session
+from flask import Blueprint, Flask, request, render_template
+from flask import session as login_session, url_for, redirect, flash
 
 # import other project files
 from models import User, Base, Catagory, Item
 from controls import checkLogin, sqlItemSearch, showAllItems
-from controls import crud_create, crud_edit, crud_delete 
+from controls import crud_create, crud_edit, crud_delete
 from auth import auth
 from apis import api
-
-app = Flask(__name__)
-app.register_blueprint(auth)
-app.register_blueprint(api, url_prefix='/api')
 
 # import database library
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+
+app = Flask(__name__)
+app.register_blueprint(auth)
+app.register_blueprint(api, url_prefix='/api')
 
 # connect to database
 engine = create_engine('sqlite:///catalog.db?check_same_thread=False')
@@ -45,7 +45,8 @@ def viewAll_owner(owner):
 def viewAll_catagory(catagory):
     items = sqlItemSearch('catagory', catagory)
     if request.method == 'GET':
-        return render_template('viewcatagory.html', catagory=catagory, items=items)
+        return render_template('viewcatagory.html',
+                               catagory=catagory, items=items)
 
 
 @app.route('/catalog/item/<string:item_name>', methods=['GET'])
@@ -74,7 +75,8 @@ def editItem(item_name):
     if checkLogin(True, item):
         catagories = session.query(Catagory).all()
         if request.method == 'GET':
-            return render_template('edititem.html', item=item, catagories=catagories)
+            return render_template('edititem.html',
+                                   item=item, catagories=catagories)
         if request.method == 'POST':
             crud_edit(item)
             return redirect(url_for('viewAll_owner', owner=item.owner))
@@ -90,7 +92,8 @@ def deleteItem(item_name):
             return render_template('deleteitem.html', item=item)
         if request.method == 'POST':
             crud_delete(item)
-            return redirect(url_for('viewAll_catagory', catagory=item.catagory))
+            return redirect(url_for('viewAll_catagory',
+                                    catagory=item.catagory))
     else:
         return redirect(url_for('viewAll_catagory', catagory=item.catagory))
 
