@@ -30,7 +30,6 @@ def checkLogin(local=False, crudItem=None):
         crudItem: SQLAlchemy query
     Outputs:
         Boolean
-      
     """
     if 'username' not in login_session:
         return False
@@ -52,7 +51,7 @@ def checkLogin(local=False, crudItem=None):
 
 def sqlItemSearch(checkby, checkVar):
     """
-    Runs a search of the Item table, filtered by either 'name', 'owner', 
+    Runs a search of the Item table, filtered by either 'name', 'owner',
    or 'catagory'.
     Inputs:
         checkby: String
@@ -61,8 +60,9 @@ def sqlItemSearch(checkby, checkVar):
         crudItem: SQLAlchemy query
     """
     assert type(checkby) == str, 'checkby must be a string'
+    checkbyAssert = 'checkby must be "name", "owner", or "catagory"'
     assert checkby in [
-        'name', 'owner', 'catagory'], 'checkby can only be "name", "owner", or "catagory"'
+        'name', 'owner', 'catagory'], checkbyAssert
     assert type(checkVar) == str, 'checkVar must be a string'
 
     search = session.query(Item)
@@ -78,7 +78,7 @@ def sqlItemSearch(checkby, checkVar):
 
 def showAllItems(separate=False):
     """
-    Returns the entire Item table. If separate is set to True, the 
+    Returns the entire Item table. If separate is set to True, the
     items are returned as a dictionary separated by catagory.
     Inputs:
         separate (optional): Boolean, defualts to False
@@ -98,10 +98,9 @@ def showAllItems(separate=False):
     return items
 
 
-
 def crud_create():
     """
-    Creates a new item in the Item table based on the form data & 
+    Creates a new item in the Item table based on the form data &
     the current session.
     Inputs:
         None
@@ -156,8 +155,9 @@ def createUser(login_session):
     Outputs:
         user.id: int
     """
-    newUser = User(name=login_session['username'], email=login_session['email'])
+    username = login_session['username']
+    newUser = User(name=username, email=login_session['email'])
     session.add(newUser)
     session.commit()
-    user = session.query(User).filter_by(name=login_session['username']).first()
+    user = session.query(User).filter_by(name=username).first()
     return user.id
