@@ -6,7 +6,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask import make_response, flash, Blueprint
 from flask import session as login_session
 
-#import oauth
+# import oauth
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
 
@@ -29,9 +29,10 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 auth = Blueprint('auth', __name__,
-                        template_folder='templates')
+                 template_folder='templates')
 
-CLIENT_ID = "506926343220-t1f403simfav5cbr8i4udls4l3mr0d82.apps.googleusercontent.com"
+client_number = "506926343220-t1f403simfav5cbr8i4udls4l3mr0d82"
+CLIENT_ID = client_number + ".apps.googleusercontent.com"
 
 
 # Create anti-forgery state token
@@ -43,7 +44,7 @@ def login():
     return render_template('login.html', STATE=state)
 
 
-@auth.route('/gconnect', methods=['GET','POST'])
+@auth.route('/gconnect', methods=['GET', 'POST'])
 def gconnect():
     # Validate state token
     if request.args.get('state') != login_session['state']:
@@ -94,8 +95,8 @@ def gconnect():
     stored_access_token = login_session.get('access_token')
     stored_gplus_id = login_session.get('gplus_id')
     if stored_access_token is not None and gplus_id == stored_gplus_id:
-        response = make_response(json.dumps('Current user is already connected.'),
-                                 200)
+        response_message = 'Current user is already connected.'
+        response = make_response(json.dumps(response_message), 200)
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -116,7 +117,7 @@ def gconnect():
     login_session['provider'] = 'google'
 
     # see if user exists, if it doesn't make a new one
-    user_id = session.query(User).filter_by(email = data["email"]).first().id
+    user_id = session.query(User).filter_by(email=data["email"]).first().id
     if not user_id:
         user_id = createUser(login_session)
     login_session['user_id'] = user_id
@@ -125,7 +126,6 @@ def gconnect():
         login_session['username'])
     flash("you are now logged in as %s" % login_session['username'])
     return response
-
 
 
 # DISCONNECT - Revoke a current user's token and reset their login_session
