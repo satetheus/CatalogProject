@@ -13,6 +13,7 @@ class User(Base):
     name = Column(String(32), index=True, nullable=False)
     email = Column(String(64), nullable=False)
 
+
 class Catagory(Base):
     __tablename__ = 'catagory'
     id = Column(Integer, primary_key=True)
