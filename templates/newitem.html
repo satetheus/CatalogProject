@@ -10,7 +10,7 @@
         
         <label for="Catagory"><h3>catagory</h3></label>
         {% for catagory in catagories %}
-            <input type="radio" name="catagory" value="{{catagory.name}}">{{catagory.name}}<br>
+            <input type="radio" name="catagory" value="{{catagory.name}}" required>{{catagory.name}}<br>
         {% endfor %}
         <br>
 
