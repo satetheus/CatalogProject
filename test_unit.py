@@ -4,11 +4,11 @@ import sqlalchemy
 
 
 def test_itemSearch():
-    nameAssert = 'name didn\'t match or was absent.
+    nameAssert = 'name didn\'t match or was absent.'
     assert sqlItemSearch('name', 'dopu').name == 'dopu', nameAssert
-    ownerAssert = 'owner didn\'t match or was absent.
+    ownerAssert = 'owner didn\'t match or was absent.'
     assert sqlItemSearch('owner', 'Vorian')[0].owner == 'Vorian', ownerAssert
-    cataAssert = 'catagory didn\'t match or was absent.
+    cataAssert = 'catagory didn\'t match or was absent.'
     assert sqlItemSearch('catagory', 'rpg')[0].catagory == 'rpg', cataAssert
 
 
