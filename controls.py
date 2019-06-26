@@ -155,7 +155,7 @@ def createUser(login_session):
     Outputs:
         user.id: int
     """
-    username = login_session['username']
+    username = login_session['username'].capitalize()
     newUser = User(name=username, email=login_session['email'])
     session.add(newUser)
     session.commit()

@@ -34,7 +34,7 @@ def homepage():
 
 @app.route('/catalog/owner/<string:owner>', methods=['GET'])
 def viewAll_owner(owner):
-    items = sqlItemSearch('owner', owner)
+    items = sqlItemSearch('owner', owner.capitalize())
     if request.method == 'GET' and checkLogin():
         return render_template('viewowner.html', owner=owner, items=items)
     else:
