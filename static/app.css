@@ -12,13 +12,14 @@ html {
 
 .login {
     font-family: inherit;
-    background-color: gray;
+    background: purple;
     position: absolute;
     top: 0;
     right: 0;
 }
 
 .login > a {
+    color: wheat;
     font-family: inherit;
     text-decoration: none;
 }
@@ -31,7 +32,7 @@ h1 {
 .data {
     font-family: inherit;
     margin: 2%;
-    background-color: grey;
+    background-color: #737373;
     float: left;
     width: 16%;
     border-radius: 2%;
