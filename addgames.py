@@ -2,6 +2,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import User, Base, Catagory, Item
+from gamefile import games
 
 engine = create_engine('sqlite:///catalog.db')
 Base.metadata.bind = engine
@@ -28,16 +29,10 @@ for types in catagories:
 session.commit()
 
 # make test items
-items = ['kdtl', 'gibm', 'jbmp', 'dopu', 'memb', 'fwcj', 'mhsd', 'yhge',
-         'mzze', 'uicj', 'nvwg', 'jypy', 'pdlp', 'oseg', 'gvku', 'alfk',
-         'npwe', 'ihtr', 'wwjr', 'ohas', 'wwkw', 'nnsq', 'hezz', 'tird',
-         'gbpb']
-
-for i in range(len(items)):
-    currentName, _ = users[int(i/5) % 5]
-    owner = session.query(User).filter_by(name=currentName).first().name
-    catagory = session.query(Catagory).filter_by(
-        name=catagories[i % 5]).first().name
-    game = Item(name=items[i], owner=owner, catagory=catagory)
-    session.add(game)
+for game in games:
+    name = game['name']
+    owner = game['owner']
+    catagory = game['catagory']
+    newItem = Item(name=name, owner=owner, catagory=catagory)
+    session.add(newItem)
 session.commit()
