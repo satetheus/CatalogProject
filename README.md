@@ -27,7 +27,6 @@ pip3 install -r requirements.txt
 |passlib        | 1.7.1             |
 |pyasn1         | 0.4.5             |
 |pyasn1-modules | 0.2.5             |
-|pycurl         | 7.43.0            |
 |pyparsing      | 2.4.0             |
 |requests       | 2.20.0            |
 |rsa            | 4.0               |
