@@ -13,7 +13,7 @@
 {% block dbdata %}
   {% for catagory, items in items.items() %}
     <div class='data'>
-      <h3>{{catagory}}</h3>
+      <h3>{{catagory.capitalize()}}</h3>
         {% for item in items %}
           <span>{{item.name}}</span><br>
           <span>{{item.owner}}</span><br>

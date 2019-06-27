@@ -2,7 +2,7 @@
 
 {% block title %}View Catagory{% endblock %}
 
-{% block header %}View items in {{catagory}}{% endblock %}
+{% block header %}View items in {{catagory.capitalize()}}{% endblock %}
 
 {% block dbdata %}
   {% for item in items %}
