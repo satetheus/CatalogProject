@@ -49,7 +49,7 @@ python addgames.py
 ### Starting the server
 To start the server, run the following command in the repo directory:
 ```bash
-python views.py
+python __init__.py
 ```
 ## Sources
 @shyamgupta:
