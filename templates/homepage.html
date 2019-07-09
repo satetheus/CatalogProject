@@ -14,6 +14,9 @@
   {% for catagory, items in items.items() %}
     <div class='data'>
       <h3>{{catagory.capitalize()}}</h3>
+        <button class=new_item>
+          <a href='{{url_for("newItem")}}'><strong>New Item</strong></a>
+        </button><br>
         {% for item in items %}
           <span>{{item.name}}</span><br>
           <span>{{item.owner}}</span><br>
