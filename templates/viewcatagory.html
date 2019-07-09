@@ -5,6 +5,9 @@
 {% block header %}View items in {{catagory.capitalize()}}{% endblock %}
 
 {% block dbdata %}
+  <button class=new_item>
+    <a href='{{url_for("newItem")}}'><strong>New Item</strong></a>
+  </button>
   {% for item in items %}
     <br><br>
     <span class='item-name'>{{item.name}}</span><br>
